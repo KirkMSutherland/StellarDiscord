@@ -11,14 +11,16 @@ class Game:
 
 
     def register_player(self, player_name):
-        self.players.append(Player(player_name))
+        self.players[player_name] = Player(player_name)
 
     def get_players(self):
-        list = 'Players: '
-        for n in self.players:
-            list = list + n.name + ', '
+        return list(self.players.keys())
 
-        return list
+    def get_resources(self, player_name):
+        return self.players[player_name].resources
 
-#    def get_fleet(self, player_name):
-#        self.players.
+    def build_ship(self, player_name, type):
+        return self.players[player_name].shipyard_build(type)
+
+    def get_fleet(self, player_name):
+        return self.players[player_name].get_fleet()
