@@ -1,44 +1,24 @@
-# bot.py
-import os
+# engine.py
+
 import random
+from player import Player
 
-import discord
-from dotenv import load_dotenv
+class Game:
+    def __init__(self, size=10):
+        self.size = size
 
-load_dotenv()
-token = os.getenv('DISCORD_TOKEN')
+        self.players = {}
 
-client = discord.Client()
 
-@client.event
-async def on_ready():
-    print(f'{client.user.name} has connected to Discord!')
+    def register_player(self, player_name):
+        self.players.append(Player(player_name))
 
-@client.event
-async def on_member_join(member):
-    await member.create_dm()
-    await member.dm_channel.send(
-        f'Hi {member.name}, welcome to my Discord server!'
-    )
+    def get_players(self):
+        list = 'Players: '
+        for n in self.players:
+            list = list + n.name + ', '
 
-@client.event
-async def on_message(message):
-    if message.author == client.user:
-        return
+        return list
 
-    brooklyn_99_quotes = [
-        'I\'m the human form of the 💯 emoji.',
-        'Bingpot!',
-        (
-            'Cool. Cool cool cool cool cool cool cool, '
-            'no doubt no doubt no doubt no doubt.'
-        ),
-        'Doug Judy!',
-        "Sticks and stones may break my bones, but my words will live on forever"
-    ]
-
-    if message.content == '99!':
-        response = random.choice(brooklyn_99_quotes)
-        await message.channel.send(response)
-
-client.run(token)
+#    def get_fleet(self, player_name):
+#        self.players.
