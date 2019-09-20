@@ -24,3 +24,9 @@ class Game:
 
     def get_fleet(self, player_name):
         return self.players[player_name].get_fleet()
+
+    def build_zone(self, player_name, planet, zone_type):
+        return self.players[player_name].build_zone(planet, zone_type)
+
+    def claim_planet(self, player_name, planet_name):
+        return self.players[player_name].claim_planet(planet_name)

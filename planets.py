@@ -1,6 +1,8 @@
 # planets.py
 
-class Ship:
-    def __init__(self):
-        self.name = 'Enterprise'
-        self.atk = 3
+class Planet:
+    def __init__(self, name, planet_type, size):
+        self.name = name
+        self.planet_type = planet_type
+        self.size = size
+        self.zones = []
