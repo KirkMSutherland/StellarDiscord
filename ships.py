@@ -1,8 +1,8 @@
 # ships.py
 
 ship_types = {
-    'CV': 1,
-    'DD': 2,
-    'CR': 4,
-    'BB': 8
+    'CV': {'materials': 1},
+    'DD': {'materials': 2},
+    'CR': {'materials': 4, 'cybernetics': 1},
+    'BB': {'materials': 8, 'cybernetics': 2}
 }
