@@ -32,11 +32,16 @@ class Player:
         return msg
 
     def gain_costs(self, cost):
+        msg = ''
         for res in cost:
             if res not in self.resources:
                 self.resources[res] = {res : Resource(res, cost[res])}
             else:
                 self.resources[res].amount = self.resources[res].amount + cost[res]
+
+            msg = msg + str(cost[res]) + resource_types[res][1]
+        return msg
+
 
     def shipyard_build(self, ship_type):
         if ship_type in ship_types:
@@ -98,6 +103,15 @@ class Player:
         return msg
 
     def produce(self, planet):
-        self.planets[0].zones[0][2]
+        for z in self.planets[planet].zones:
+            (check, msg) = self.check_costs(z.input)
+
+            if not check:
+                msg = '{0} cannot produce, missing: '.format(planet) + msg
+            else:
+                msg = self.consume_costs(z.input)
+                msg = msg + self.gain_costs(z.output)
+
+        return msg
 
 

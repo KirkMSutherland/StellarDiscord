@@ -102,9 +102,15 @@ async def on_reaction_add(reaction, user):
             if user.id == game.trades[n].partner:
                 if reaction.emoji == '\U0001f44d':
                     msg = game.complete_trade(n)
-                    print(msg)
+                    await reaction.message.channel.send(msg)
+                    await reaction.message.delete()
+                    del game.trades[n]
+                    break
                 elif reaction.emoji == '\U0001f44e':
-                    print("don't trade!")
+                    await reaction.message.delete()
+                    del game.trades[n]
+                    await reaction.message.channel.send('Trade Declined')
+                    break
 
 
 bot.run(token)

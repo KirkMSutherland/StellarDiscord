@@ -31,8 +31,8 @@ class Game:
     def claim_planet(self, player_name, planet_name):
         return self.players[player_name].claim_planet(planet_name)
 
-    def produce(self, player_name, zone_name):
-        return self.players[player_name].produce(zone_name)
+    def produce(self, player_name, planet_name):
+        return self.players[player_name].produce(planet_name)
 
     def empire(self, player_name):
         msg = ''
@@ -48,7 +48,19 @@ class Game:
         if args[0] in self.trades:
             return False
 
-        self.trades[args[0]] = Trade(player_name.id, partner, {'materials': 5}, {'cybernetics': 5})
+        offer_list = args[2:args.index('want')]
+        want_list = args[args.index('want')+1:]
+
+        offer_dict = {}
+        want_dict = {}
+
+        for x in range(0, len(offer_list), 2):
+            offer_dict[offer_list[x]] = int(offer_list[x+1])
+
+        for x in range(0, len(want_list), 2):
+            want_dict[want_list[x]] = int(want_list[x+1])
+
+        self.trades[args[0]] = Trade(player_name.id, partner, offer_dict, want_dict)
 
         msg = '{0} wants to trade with '.format(player_name.mention) + '<@' + str(self.trades[args[0]].partner) + '>\n'
         msg = msg + 'Contract: ' + args[0] + '\n'
@@ -70,3 +82,8 @@ class Game:
 
             self.players[trade.proposer].gain_costs(trade.wants)
             self.players[trade.partner].gain_costs(trade.offers)
+            return 'Trade Complete'
+        else:
+            return 'Trade Failed due to insufficient resources'
+
+
