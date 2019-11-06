@@ -6,13 +6,14 @@ from resources import resource_types, Resource
 from planets import Planet
 
 class Player:
-    def __init__(self, player_name):
+    def __init__(self, player_id, player_name):
         self.planets = {}
         self.ships = []
         self.resources = {
             'materials': Resource('materials', 50), 'cybernetics': Resource('cybernetics', 10),
             'food': Resource('food', 25)}
         self.name = player_name
+        self.id = player_id
 
     def check_costs(self, cost):
         for res in cost:
