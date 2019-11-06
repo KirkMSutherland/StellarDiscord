@@ -8,7 +8,7 @@ from dotenv import load_dotenv
 from engine import Game
 
 load_dotenv()
-token = os.getenv('DISCORD_TOKEN')
+token = os.getenv('DISCORD_TOKEN') 
 
 bot = commands.Bot(command_prefix='!')
 
@@ -22,13 +22,20 @@ async def on_ready():
 
 @bot.command(name='register', help='Enters you into the game', aliases=['reg'])
 async def register(ctx):
-    game.register_player(ctx.author.id)
+    game.register_player(ctx.author.id, ctx.author)
     await ctx.send('{0.mention} has joined the fray!'.format(ctx.author))
 
 
 @bot.command(name='players', help='Shows everybody playing')
 async def show_players(ctx):
-    await ctx.send((game.get_players()))
+    try:
+        text = "Current the players playing are:\n"
+        for player in game.get_players():
+            text += "{}".format(game.players[player].name)
+            text += "\n"
+        await ctx.send(text)
+    except:
+        await ctx.send("oof something went wrong {}".format(game.get_players()))
 
 
 @bot.command(name='resources', help='(rs) Shows your available resources', aliases=['rs'])
